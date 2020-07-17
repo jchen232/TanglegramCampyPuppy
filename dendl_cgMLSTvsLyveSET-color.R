@@ -9,7 +9,7 @@ library("dendextend")
 treefile1 <- read.tree(file = "labpaper2018_cgMLST_newprod.dnd")
 treefile2 <- read.tree(file = "out.RAxML_bipartitions.dnd")
 
-outbreak <- read.table('clade_numbers.txt',
+outbreak <- read.table('clade_numbers2.txt',
                        sep="\t", header=T, stringsAsFactors=F)
 
 tree1 <- reorder(midpoint.root((treefile1)), order = "cladewise")
@@ -28,14 +28,13 @@ dend_tree2=(midpoint.root(dend_tree2))
 
 clade1 <- match(outbreak$WGS_id[outbreak$Clade == 1],dend_tree1$tip.label)
 clade2 <- match(outbreak$WGS_id[outbreak$Clade == 2],dend_tree1$tip.label)
-clade3 <- match(outbreak$WGS_id[outbreak$Clade == 3],dend_tree1$tip.label)
 
 myColors <- c()
 myColors[clade1] <- 'red'
 myColors[clade2] <- 'blue'
-myColors[clade3] <- 'green'
 
-myNewColors <- c(myColors[myColors=="green"],myColors[myColors=="red"],myColors[myColors=="blue"])
+
+myNewColors <- c(myColors[myColors=="blue"],myColors[myColors=="red"])
 
 print("untangle")
 dendl <- dendextend::untangle(as.dendrogram(dend_tree1), 
@@ -55,7 +54,7 @@ baker      <- cor.dendlist(dendl, method = "baker")
 
 
 # Start off the viz
-png(file="tangle-dendl-mlst-hqsnp-color.png", width = 500, height = 500, )
+tiff(file="tangle-dendl-mlst-hqsnp-color2.tiff", width = 7, height = 7, unit = "in",res =600 )
 tanglegram(dendl,
            main_left='cgMLST',
            main_right='lyve-SET',
